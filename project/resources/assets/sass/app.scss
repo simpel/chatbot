@@ -1,0 +1,116 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.marginbottom {
+	margin-bottom: $margin;
+}
+
+.navbar-default .navbar-brand {
+	color: $brand-primary;
+
+	&:hover {
+		color: lighten($brand-primary, 10%);
+		text-decoration: underline;
+	}
+}
+
+
+#dialogue {
+	padding: $margin $margin*2;
+
+	.messages {
+		
+	
+
+		.message {
+			
+			margin-bottom: $margin;
+			@include clearfix;
+			
+			
+			.c1 {
+				width: 32px;
+				overflow: hidden;
+				float: left;
+			}
+			.c2 {
+				margin-left: 42px;
+				width: auto;
+			}
+
+			.circle {
+				border-radius: 500px;
+				overflow: hidden;
+
+				img {
+					width: 32px;
+					height: auto;
+				}
+			}
+
+			.sender {
+				font-size: $font-size-base * 0.8;
+				color: lighten($text-color, 30%);
+				margin-bottom: $margin;
+
+			}
+
+			.content {
+				display: inline-block;
+				clear: both;
+				padding: 1rem;
+				box-shadow: 0 0 3px lighten($text-color, 30%);
+				max-width: 90%;
+
+
+
+				
+				
+
+				&.text {
+					margin-bottom: 0.3rem;
+				}
+			}
+			
+			@media (min-width: $screen-sm-min) { 
+				.content {
+					max-width: 55%;
+				}
+			}
+
+			.human {
+
+				float: right;
+
+				.content {
+					float: right;
+					clear: both;
+					color: #FFF;
+					background: $brand-primary;
+
+				}
+			}
+
+			.bot {
+				.content {
+					background: #FFF;
+					float: left;
+					
+				}
+			}
+		}
+	}
+}
+
+#userinput {
+	form {
+		margin: 0.7rem 0;
+	}
+}
