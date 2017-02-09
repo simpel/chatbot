@@ -5,40 +5,64 @@
             <div class="container-fluid">
                 
 
-    <form v-on:submit.prevent="converse">
         <div class="input-group">
 
-            <input type="text" class="form-control" v-model="message" placeholder="Type here my friend..." ref="messageInput" autofocus>
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">Send</button>
-            </span>
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Type here my friend..." 
+                autofocus 
+                @keyup.enter="sendMessage"
+                :disabled="isSendingMessage">
+            
         </div>
-    </form>
+
     </div>
         </nav>
 </template>
 
 <script>
     export default {
-        data() {
+        data: function() {
             return {
-                message: ''
+                isSendingMessage: false
             }
         },
         methods: {
-            converse: function () {
-                this.$refs.messageInput.focus()
+            sendMessage (e) {
+                this.isSendingMessage = true;
+                const text = e.target.value
                 
+                if (text.trim()) {
+
+                    this.$store.commit('sendMessage', {
+                        body: text,
+                        part: 'human',
+                        type: 'text'
+                    })
+                }
+
+                e.target.value = ''
+
                 this.success = function(m) {
+
+
+                    this.$store.commit('sendMessage', {
+                        body: 'Placeholder text',
+                        part: 'bot',
+                        type: 'text'
+                    })
+
+                    this.isSendingMessage = false
                     
                 }
                 this.error = function(m) {
-                    console.log('ERROR!!!', m);
+                    this.isSendingMessage = false
                 }
 
-                this.$http.post( '/api/dialogue/converse', {"q" : this.message})
+                this.$http.post( '/api/dialogue/converse', {"q" : text})
                     .then(this.success, this.error);
-
+              
             }
         }
     }
