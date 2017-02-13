@@ -20819,6 +20819,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
+        makeAjaxCall: function makeAjaxCall() {
+            var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+            var success = function success(m) {
+
+                console.log(m.data.type, m.data.type !== 'stop', m.data);
+
+                if (m.data.type != 'stop') {
+
+                    this.$store.commit('sendMessage', {
+                        body: m.data.msg,
+                        part: 'bot',
+                        type: 'text'
+                    });
+
+                    this.isSendingMessage = false;
+
+                    this.makeAjaxCall();
+                }
+            };
+            var error = function error(m) {
+                this.isSendingMessage = false;
+            };
+
+            this.$http.post('/api/dialogue/converse', { "q": text }).then(success, error);
+        },
         sendMessage: function sendMessage(e) {
             this.isSendingMessage = true;
             var text = e.target.value;
@@ -20834,21 +20860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             e.target.value = '';
 
-            this.success = function (m) {
-
-                this.$store.commit('sendMessage', {
-                    body: 'Placeholder text',
-                    part: 'bot',
-                    type: 'text'
-                });
-
-                this.isSendingMessage = false;
-            };
-            this.error = function (m) {
-                this.isSendingMessage = false;
-            };
-
-            this.$http.post('/api/dialogue/converse', { "q": text }).then(this.success, this.error);
+            this.makeAjaxCall(text);
         }
     }
 };
