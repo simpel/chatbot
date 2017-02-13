@@ -13,7 +13,7 @@
                 placeholder="Type here my friend..." 
                 autofocus 
                 @keyup.enter="sendMessage"
-                :disabled="isSendingMessage">
+                :disabled="isSending">
             
         </div>
 
@@ -22,44 +22,18 @@
 </template>
 
 <script>
+
+    import WitCall from './mixins/WitCall.js';
+
     export default {
-        data: function() {
-            return {
-                isSendingMessage: false
+        mixins: [WitCall],
+        computed: {
+            isSending () {
+                return this.$store.state.isSending
             }
         },
         methods: {
-            makeAjaxCall (text = null) {
-                var success = function(m) {
-
-                    
-
-                    console.log(m.data.type, m.data.type !== 'stop', m.data);
-
-                    if(m.data.type != 'stop') {
-
-                        this.$store.commit('sendMessage', {
-                            body: m.data.msg,
-                            part: 'bot',
-                            type: 'text'
-                        })
-
-                        this.isSendingMessage = false
-
-                        this.makeAjaxCall();
-                    }
-
-                    
-                }
-                var error = function(m) {
-                    this.isSendingMessage = false
-                }
-
-                this.$http.post( '/api/dialogue/converse', {"q" : text})
-                    .then(success, error);
-            },
             sendMessage (e) {
-                this.isSendingMessage = true;
                 const text = e.target.value
                 
                 if (text.trim()) {

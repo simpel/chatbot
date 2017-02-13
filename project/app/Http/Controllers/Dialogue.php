@@ -11,8 +11,7 @@ class Dialogue extends Controller
 {
     
 	private $client;
-	private $session;
-	private $v;
+
 	private $base_url;
 
 	public function __construct()
@@ -24,17 +23,16 @@ class Dialogue extends Controller
 	        ]
 		]);
 		
-		$this->session = time();
-		$this->v = '1';
+	
 		$this->base_url = "https://api.wit.ai";
     }
 
     public function converse(Request $request) {
     	$result = $this->client->post($this->base_url.'/converse', 
     		['query' => [
-    			'v' => $this->v,
+    			'v' => $request->v,
     			'q' => $request->q,
-    			'session_id' => $this->session
+    			'session_id' => $request->session_id
     			]
     		]);
     	return $result;

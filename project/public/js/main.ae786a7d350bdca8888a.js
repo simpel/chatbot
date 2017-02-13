@@ -20720,6 +20720,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20739,7 +20754,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-/* harmony default export */ __webpack_exports__["default"] = {};
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js___default.a],
+    computed: {
+        isSending: function isSending() {
+            return this.$store.state.isSending;
+        }
+    }
+};
 
 /***/ }),
 /* 34 */
@@ -20788,6 +20813,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js__);
 //
 //
 //
@@ -20811,42 +20838,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = {
-    data: function data() {
-        return {
-            isSendingMessage: false
-        };
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js___default.a],
+    computed: {
+        isSending: function isSending() {
+            return this.$store.state.isSending;
+        }
     },
     methods: {
-        makeAjaxCall: function makeAjaxCall() {
-            var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-            var success = function success(m) {
-
-                console.log(m.data.type, m.data.type !== 'stop', m.data);
-
-                if (m.data.type != 'stop') {
-
-                    this.$store.commit('sendMessage', {
-                        body: m.data.msg,
-                        part: 'bot',
-                        type: 'text'
-                    });
-
-                    this.isSendingMessage = false;
-
-                    this.makeAjaxCall();
-                }
-            };
-            var error = function error(m) {
-                this.isSendingMessage = false;
-            };
-
-            this.$http.post('/api/dialogue/converse', { "q": text }).then(success, error);
-        },
         sendMessage: function sendMessage(e) {
-            this.isSendingMessage = true;
             var text = e.target.value;
 
             if (text.trim()) {
@@ -20937,22 +20941,29 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 // root state object.
 // each Vuex instance is just a single state tree.
 var state = {
-  messages: []
+  messages: [],
+  isSending: false
 };
 
-// getters are functions
 var getters = {};
 
 var actions = {
   sendMessage: function sendMessage(_ref) {
     var commit = _ref.commit;
     return commit('sendMessage');
+  },
+  broadCasting: function broadCasting(_ref2) {
+    var commit = _ref2.commit;
+    return commit('broadCasting');
   }
 };
 
 var mutations = {
   sendMessage: function sendMessage(state, messageObj) {
     state.messages.push(messageObj);
+  },
+  broadCasting: function broadCasting(state, boolean) {
+    state.isSending = boolean;
   }
 };
 
@@ -40607,10 +40618,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "messages"
-  }, _vm._l((_vm.$store.state.messages), function(message) {
+  }, [_vm._l((_vm.$store.state.messages), function(message) {
     return _c('div', {
-      key: message
-    }, [_c('div', {
+      key: message,
       staticClass: "message"
     }, [_c('div', {
       class: message.part
@@ -40619,9 +40629,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('div', {
       staticClass: "content",
       class: message.type
-    }, [_vm._v("\n                            " + _vm._s(message.body) + "\n                        ")])])])])])
-  }))])
-},staticRenderFns: []}
+    }, [_vm._v("\n                                " + _vm._s(message.body) + "\n                            ")])])])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "message waitingContainer",
+    class: {
+      show: _vm.isSending
+    }
+  }, [_vm._m(0)])], 2)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "bot"
+  }, [_c('div', {
+    staticClass: "load"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('span', {
+    staticClass: "dot dot_1"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "dot dot_2"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "dot dot_3"
+  })])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -40713,7 +40742,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "text",
       "placeholder": "Type here my friend...",
       "autofocus": "",
-      "disabled": _vm.isSendingMessage
+      "disabled": _vm.isSending
     },
     on: {
       "keyup": function($event) {
@@ -43069,6 +43098,54 @@ module.exports = function(module) {
 __webpack_require__(12);
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */
+/***/ (function(module, exports) {
+
+module.exports = {
+    methods: {
+        makeAjaxCall: function makeAjaxCall() {
+            var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+
+            this.$store.commit('broadCasting', true);
+
+            var success = function success(m) {
+                this.$store.commit('broadCasting', false);
+
+                if (m.data.type != 'stop') {
+
+                    this.$store.commit('sendMessage', {
+                        body: m.data.msg,
+                        part: 'bot',
+                        type: 'text'
+                    });
+
+                    this.makeAjaxCall();
+                }
+            };
+            var error = function error(m) {
+                this.$store.commit('broadCasting', false);
+            };
+
+            this.$http.post('/api/dialogue/converse', {
+                "q": text,
+                "session_id": 'sss',
+                "v": '3e'
+            }).then(success, error);
+        }
+    }
+};
 
 /***/ })
 /******/ ]);

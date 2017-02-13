@@ -106,7 +106,51 @@
 				}
 			}
 		}
+
+		.waitingContainer {
+			display: none;
+			&.show {
+				display: visible;
+			}
+
+			.dot {
+			    display: inline-block;
+			    width: $dotSize;
+			    height: $dotSize;
+			    border-radius: $dotSize * 0.5;
+			    background: #ccc;
+
+			    &.dot_1 {
+			    animation: animateDot $animationLength linear infinite;
+			    left: $animationRadius;
+			     
+			}
+
+			&.dot_2 {
+			    animation: animateDot $animationLength linear infinite;
+			    animation-delay: $animationLength / 3;
+			    left: $animationRadius * 2;
+			}
+
+			&.dot_3 {
+			    animation: animateDot $animationLength linear infinite;
+			    animation-delay: (($animationLength / 3) * 2);
+			    left: $animationRadius * 3;
+			}
+
+			@keyframes animateDot {
+			    0% { opacity: 0; }
+			    50% { opacity: 1; }
+			    100% { opacity: 0; }
+			}
+			}
+
+			
 	}
+
+	}
+
+	
 }
 
 #userinput {

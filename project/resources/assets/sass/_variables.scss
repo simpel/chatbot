@@ -6,6 +6,11 @@ $body-bg: #F4F5F6;
 
 $margin: 1rem;
 
+//Waiting message animation
+$animationLength: 1.5s;
+$animationRadius: 12px;
+$dotSize: 8px;
+
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
 $list-group-border: $laravel-border-color;

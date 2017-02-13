@@ -6,20 +6,24 @@ Vue.use(Vuex)
 // root state object.
 // each Vuex instance is just a single state tree.
 const state = {
-  messages: []
+  messages: [],
+  isSending: false
 }
 
-// getters are functions
 const getters = {
 }
 
 const actions = {
   sendMessage: ({ commit }) => commit('sendMessage'),
+  broadCasting: ({ commit }) => commit('broadCasting')
 }
 
 const mutations = {
   sendMessage (state, messageObj) {
     state.messages.push(messageObj)
+  },
+  broadCasting (state, boolean) {
+    state.isSending = boolean
   }
 }
 
