@@ -1,13 +1,18 @@
 <template>
-    <div id="dialogue">
+    <div id="dialogue" ref="dialogue">
         <div class="messages">
         
-            <div class="message" v-for="message in $store.state.messages" v-bind:key="message">
+            <div class="message" v-for="(message, index) in $store.state.messages" v-bind:key="message">
                     <div :class=message.part>
                         <div class="load">
                             <div :class=message.type class="content">
-                                {{message.body}}
+                                {{message.msg}}
                             </div>
+                        </div>
+                        <div v-if="message.quickreplies" class="content quickreplies">
+                            <button class="btn-xs btn-primary" v-on:click="sendQuickReply" type="button" :value="index" v-for="(reply, index) in message.quickreplies">
+                                {{reply}}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -37,8 +42,16 @@
 
         mixins: [WitCall],
         computed: {
-            isSending () {
+            isSending() {
                 return this.$store.state.isSending
+            }
+        },
+        updated() {
+            $('body').scrollTop($('body').height())
+        },
+        methods: {
+            sendQuickReply: function(e) {
+                this.makeAjaxCall(e.target.innerText);
             }
         }
     }

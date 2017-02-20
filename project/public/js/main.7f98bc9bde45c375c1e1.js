@@ -19825,7 +19825,7 @@ __webpack_require__(36);
 
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#app',
+  el: '#skeleton',
   store: __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */],
   render: function render(h) {
     return h(__WEBPACK_IMPORTED_MODULE_1__App_vue___default.a);
@@ -20687,10 +20687,8 @@ module.exports = function spread(callback) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Dialogue_vue__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Dialogue_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Dialogue_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_MainNavigation_vue__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_MainNavigation_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_MainNavigation_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_UserInput_vue__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_UserInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_UserInput_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_UserInput_vue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_UserInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_UserInput_vue__);
 //
 //
 //
@@ -20698,8 +20696,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-
 
 
 
@@ -20707,9 +20703,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = {
   components: {
-    MainNavigation: __WEBPACK_IMPORTED_MODULE_1__components_MainNavigation_vue___default.a,
     Dialogue: __WEBPACK_IMPORTED_MODULE_0__components_Dialogue_vue___default.a,
-    UserInput: __WEBPACK_IMPORTED_MODULE_2__components_UserInput_vue___default.a
+    UserInput: __WEBPACK_IMPORTED_MODULE_1__components_UserInput_vue___default.a
   }
 
 };
@@ -20719,9 +20714,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_WitCall_js__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20763,51 +20763,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         isSending: function isSending() {
             return this.$store.state.isSending;
         }
+    },
+    updated: function updated() {
+        $('body').scrollTop($('body').height());
+    },
+
+    methods: {
+        sendQuickReply: function sendQuickReply(e) {
+            this.makeAjaxCall(e.target.innerText);
+        }
     }
 };
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 34 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    data: function data() {
-        return {};
-    }
-};
-
-/***/ }),
+/* 34 */,
 /* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -20855,11 +20825,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (text.trim()) {
 
-                this.$store.commit('sendMessage', {
-                    body: text,
+                var payload = {
+                    msg: text,
                     part: 'human',
-                    type: 'text'
-                });
+                    type: 'msg'
+                };
+
+                this.$store.commit('sendMessage', payload);
             }
 
             e.target.value = '';
@@ -40521,40 +40493,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(34),
-  /* template */
-  __webpack_require__(46),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simpel/Documents/Github/chatbot/project/resources/assets/js/components/MainNavigation.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] MainNavigation.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-392401de", Component.options)
-  } else {
-    hotAPI.reload("data-v-392401de", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 42 */,
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40597,7 +40536,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "skeleton"
     }
-  }, [_c('MainNavigation'), _vm._v(" "), _c('Dialogue'), _vm._v(" "), _c('UserInput')], 1)
+  }, [_c('Dialogue'), _vm._v(" "), _c('UserInput')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -40613,12 +40552,13 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    ref: "dialogue",
     attrs: {
       "id": "dialogue"
     }
   }, [_c('div', {
     staticClass: "messages"
-  }, [_vm._l((_vm.$store.state.messages), function(message) {
+  }, [_vm._l((_vm.$store.state.messages), function(message, index) {
     return _c('div', {
       key: message,
       staticClass: "message"
@@ -40629,7 +40569,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('div', {
       staticClass: "content",
       class: message.type
-    }, [_vm._v("\n                                " + _vm._s(message.body) + "\n                            ")])])])])
+    }, [_vm._v("\n                                " + _vm._s(message.msg) + "\n                            ")])]), _vm._v(" "), (message.quickreplies) ? _c('div', {
+      staticClass: "content quickreplies"
+    }, _vm._l((message.quickreplies), function(reply, index) {
+      return _c('button', {
+        staticClass: "btn-xs btn-primary",
+        attrs: {
+          "type": "button",
+          "value": index
+        },
+        on: {
+          "click": _vm.sendQuickReply
+        }
+      }, [_vm._v("\n                                " + _vm._s(reply) + "\n                            ")])
+    })) : _vm._e()])])
   }), _vm._v(" "), _c('div', {
     staticClass: "message waitingContainer",
     class: {
@@ -40660,69 +40613,7 @@ if (false) {
 }
 
 /***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('nav', {
-    staticClass: "navbar navbar-default navbar-fixed-top"
-  }, [_c('div', {
-    staticClass: "container-fluid"
-  }, [_c('div', {
-    staticClass: "navbar-header"
-  }, [_c('button', {
-    staticClass: "navbar-toggle collapsed",
-    attrs: {
-      "type": "button",
-      "data-toggle": "collapse",
-      "data-target": "#menu",
-      "aria-expanded": "false"
-    }
-  }, [_c('span', {
-    staticClass: "sr-only"
-  }, [_vm._v("Toggle navigation")]), _vm._v(" "), _c('span', {
-    staticClass: "icon-bar"
-  }), _vm._v(" "), _c('span', {
-    staticClass: "icon-bar"
-  }), _vm._v(" "), _c('span', {
-    staticClass: "icon-bar"
-  })]), _vm._v(" "), _c('a', {
-    staticClass: "navbar-brand",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("CBT"), _c('strong', [_vm._v("&me")])])]), _vm._v(" "), _c('div', {
-    staticClass: "collapse navbar-collapse",
-    attrs: {
-      "id": "menu"
-    }
-  }, [_c('ul', {
-    staticClass: "nav navbar-nav navbar-right"
-  }, [_c('li', [_c('a', {
-    attrs: {
-      "href": "/about"
-    }
-  }, [_vm._v("About us")])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "/signup"
-    }
-  }, [_vm._v("Login")])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "/signup"
-    }
-  }, [_vm._v("Sign up")])])])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-392401de", module.exports)
-  }
-}
-
-/***/ }),
+/* 46 */,
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43110,9 +43001,9 @@ module.exports = __webpack_require__(13);
 /* 59 */,
 /* 60 */,
 /* 61 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = {
+/* WEBPACK VAR INJECTION */(function($) {module.exports = {
     methods: {
         makeAjaxCall: function makeAjaxCall() {
             var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -43123,14 +43014,13 @@ module.exports = {
             var success = function success(m) {
                 this.$store.commit('broadCasting', false);
 
-                if (m.data.type != 'stop') {
+                var payload = m.data;
+                payload.part = 'bot';
 
-                    this.$store.commit('sendMessage', {
-                        body: m.data.msg,
-                        part: 'bot',
-                        type: 'text'
-                    });
+                console.log(payload);
 
+                if ($.inArray(payload.type, ['msg', 'quickreplies']) != -1) {
+                    this.$store.commit('sendMessage', payload);
                     this.makeAjaxCall();
                 }
             };
@@ -43146,6 +43036,7 @@ module.exports = {
         }
     }
 };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ })
 /******/ ]);

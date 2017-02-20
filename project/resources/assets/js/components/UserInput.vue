@@ -38,11 +38,13 @@
                 
                 if (text.trim()) {
 
-                    this.$store.commit('sendMessage', {
-                        body: text,
+                    var payload = {
+                        msg: text,
                         part: 'human',
-                        type: 'text'
-                    })
+                        type: 'msg'
+                    }
+
+                    this.$store.commit('sendMessage', payload)
                 }
 
                 e.target.value = ''

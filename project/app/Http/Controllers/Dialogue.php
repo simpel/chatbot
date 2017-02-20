@@ -11,8 +11,10 @@ class Dialogue extends Controller
 {
     
 	private $client;
-
 	private $base_url;
+    private $result;
+    private $resultType;
+    private $payload;
 
 	public function __construct()
     {
@@ -27,14 +29,39 @@ class Dialogue extends Controller
 		$this->base_url = "https://api.wit.ai";
     }
 
+    private function giveInfo() {
+        return 'called GiveInfo';
+    }
+
     public function converse(Request $request) {
-    	$result = $this->client->post($this->base_url.'/converse', 
+    	
+
+
+        $request = $this->client->post($this->base_url.'/converse', 
     		['query' => [
     			'v' => $request->v,
     			'q' => $request->q,
     			'session_id' => $request->session_id
     			]
     		]);
-    	return $result;
+
+        $result = $request->getBody()->getContents();
+        $resultType = json_decode($result)->type;
+
+        Log::debug($result);
+
+        switch ($resultType) {
+
+            case 'action':
+                $action = json_decode($result)->action;
+                $payload = $this->$action();
+                break;
+            
+            default:
+                $payload = $result;
+                break;
+        }
+        
+        return $payload;
     }
 }

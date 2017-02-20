@@ -23,7 +23,7 @@
 
 
 #dialogue {
-	padding: $margin $margin*2;
+	padding: 60px $margin*2;
 
 	.messages {
 		
@@ -69,12 +69,7 @@
 				box-shadow: 0 0 3px lighten($text-color, 30%);
 				max-width: 90%;
 
-
-
-				
-				
-
-				&.text {
+				&.msg {
 					margin-bottom: 0.3rem;
 				}
 			}

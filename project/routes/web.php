@@ -8,3 +8,7 @@ Route::get('/', function () {
 
 Route::post('/api/dialogue/post', 'Dialogue@post');
 Route::post('/api/dialogue/converse', 'Dialogue@converse');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
