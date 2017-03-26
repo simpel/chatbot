@@ -6,150 +6,21 @@
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 
-.marginbottom {
-	margin-bottom: $margin;
-}
+html, body { height: 100%; }
 
-.navbar-default .navbar-brand {
-	color: $brand-primary;
+.wrapper {
+	display: table;
+	height: 100%;
+	width: 100%;
+	min-height: 100%;
+	background: lighten($brand-primary, 33%);
 
-	&:hover {
-		color: lighten($brand-primary, 10%);
-		text-decoration: underline;
-	}
-}
-
-
-#dialogue {
-	padding: 60px $margin*2;
-
-	.messages {
-		
-	
-
-		.message {
-			
-			margin-bottom: $margin;
-			@include clearfix;
-			
-			
-			.c1 {
-				width: 32px;
-				overflow: hidden;
-				float: left;
-			}
-			.c2 {
-				margin-left: 42px;
-				width: auto;
-			}
-
-			.circle {
-				border-radius: 500px;
-				overflow: hidden;
-
-				img {
-					width: 32px;
-					height: auto;
-				}
-			}
-
-			.sender {
-				font-size: $font-size-base * 0.8;
-				color: lighten($text-color, 30%);
-				margin-bottom: $margin;
-
-			}
-
-			.content {
-				display: inline-block;
-				clear: both;
-				padding: 1rem;
-				box-shadow: 0 0 3px lighten($text-color, 30%);
-				max-width: 90%;
-
-				&.msg {
-					margin-bottom: 0.3rem;
-				}
-			}
-			
-			@media (min-width: $screen-sm-min) { 
-				.content {
-					max-width: 55%;
-				}
-			}
-
-			.human {
-
-				float: right;
-
-				.content {
-					float: right;
-					clear: both;
-					color: #FFF;
-					background: $brand-primary;
-
-				}
-			}
-
-			.bot {
-				.content {
-					background: #FFF;
-					float: left;
-					
-				}
-			}
-		}
-
-		.waitingContainer {
-			display: none;
-			&.show {
-				display: visible;
-			}
-
-			.dot {
-			    display: inline-block;
-			    width: $dotSize;
-			    height: $dotSize;
-			    border-radius: $dotSize * 0.5;
-			    background: #ccc;
-
-			    &.dot_1 {
-			    animation: animateDot $animationLength linear infinite;
-			    left: $animationRadius;
-			     
-			}
-
-			&.dot_2 {
-			    animation: animateDot $animationLength linear infinite;
-			    animation-delay: $animationLength / 3;
-			    left: $animationRadius * 2;
-			}
-
-			&.dot_3 {
-			    animation: animateDot $animationLength linear infinite;
-			    animation-delay: (($animationLength / 3) * 2);
-			    left: $animationRadius * 3;
-			}
-
-			@keyframes animateDot {
-			    0% { opacity: 0; }
-			    50% { opacity: 1; }
-			    100% { opacity: 0; }
-			}
-			}
-
-			
+	.inner-cell {
+		display: table-cell;
+		vertical-align: middle;
 	}
 
-	}
 
-	
-}
-
-#userinput {
-	form {
-		margin: 0.7rem 0;
-	}
 }

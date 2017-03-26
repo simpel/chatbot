@@ -1,20 +1,13 @@
 @extends('layouts.app')
 
+@section('header')
+    
+@endsection
+
 @section('content')
+    <div id="skeleton"></div>
+@endsection
 
-<div id="skeleton"></div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('scripts')
+    <script type="text/javascript" src="{{ mix('/js/main.js') }}"></script>
 @endsection

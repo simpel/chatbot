@@ -1,14 +1,8 @@
 <?php
 
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::post('/api/dialogue/post', 'Dialogue@post');
-Route::post('/api/dialogue/converse', 'Dialogue@converse');
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'StartController@index');
+
+Route::get('/api/messages/{thread_id}', 'MessageController@index');
+Route::post('/api/messages/', 'MessageController@store');

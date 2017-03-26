@@ -1,0 +1,100 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+
+@import 'variables';
+// bulma
+@import "node_modules/bulma/bulma";
+
+html,
+body,
+.full-height {
+  height: 100%;
+}
+
+.full-height {
+	display: flex;
+	overflow: hidden;
+	flex-direction: column;
+
+	> section {
+		flex: 0 0 auto;
+	}
+		
+	.top {
+		margin: 0;
+	}
+
+	.main {
+		flex: 1 1 auto;
+	    
+	    overflow: scroll;
+	    $gradient-top-left: darken(saturate(adjust-hue($primary, -10deg), 10%), 10%);
+    	$gradient-bottom-right: lighten(saturate(adjust-hue($primary, 10deg), 5%), 5%);
+    	background-image: linear-gradient(141deg, $gradient-top-left 0%, $primary 71%, $gradient-bottom-right 100%);
+
+	}
+}
+
+.has-margin-top {
+	margin-top: $size-4;
+}
+
+.has-vertical-padding {
+	padding: $size-4/2 0;
+}
+
+.textarea {
+	min-height: auto;
+}
+
+.meta {
+	color: $white;
+	padding: 0.5rem 1.5rem;
+
+	a {
+		color: $white-bis;
+	}
+}
+
+
+.waiting {
+
+	display: block;
+	line-height: 0;
+
+	span {
+		display: inline-block;
+		width: $dotSize;
+		height: $dotSize;
+		border-radius: $dotSize * 0.5;
+		border: 0px solid $primary;
+		background: $primary;
+
+
+		&:nth-child(1) {
+			animation: animateDot $animationLength ease-in-out infinite;
+			left: $animationRadius;
+		}
+
+		&:nth-child(2) {
+			animation: animateDot $animationLength ease-in-out infinite;
+			animation-delay: $animationLength / 3;
+			left: $animationRadius * 2;
+		}
+
+		&:nth-child(3) {
+			animation: animateDot $animationLength ease-in-out infinite;
+			animation-delay: (($animationLength / 3) * 2);
+			left: $animationRadius * 3;
+		}
+
+		@keyframes animateDot {
+			0% { opacity: 0.4; top: 0rem;}
+			50% { opacity: 1; top: -1rem; }
+			100% { opacity: 0.4; top: 0rem;}
+		}
+	}
+}

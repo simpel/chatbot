@@ -1,10 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import VueX from 'vuex';
 
-Vue.use(Vuex)
-
-// root state object.
-// each Vuex instance is just a single state tree.
 const state = {
   messages: [],
   isSending: false
@@ -30,7 +25,7 @@ const mutations = {
 
 // A Vuex instance is created by combining the state, mutations, actions,
 // and getters.
-export default new Vuex.Store({
+export default new VueX.Store({
   state,
   getters,
   actions,
