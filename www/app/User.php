@@ -35,7 +35,7 @@ class User extends Authenticatable
         return $this->messages()->create([
             'body' => $body, 
             'type' => $type,
-            'user_id' => $this->id
+            'user_id' => 1
         ]);
     }
 }

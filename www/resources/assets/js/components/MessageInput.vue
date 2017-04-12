@@ -1,7 +1,7 @@
 <template>
   
     <div class="container has-vertical-padding">
-        <form method="POST" action="/"  @submit.prevent="sendMessage">
+        <form method="POST" action="/"  @submit.prevent="submitChatForm">
             <div class="control is-grouped">
               <p class="control is-expanded">
                   <input class="input is-medium" v-model="message" rows="1" type="text" placeholder="Skriv ditt meddelande"/>
@@ -18,31 +18,29 @@
 </template>
 
 <script>
+
+    import wit from './../mixins/wit.js';
+
     export default {
+        mixins: [wit],
         data() {
           return {
             message: ''
           }
         },
-        mounted() {
-            console.log('Component mounted.')
-        },
         methods: {
-          sendMessage: function(e) {
+          
+          submitChatForm: function(e) {
+            var payload = {
+              msg: this.message,
+              type: 'msg',
+              sender: 'user'
+            };
 
-            self = this; 
-
-            axios.post('/api/anvandare/1/meddelande', {
-              body: this.message,
-              type: 'user'
-            })
-            .then(function (response) {
-              window.Event.$emit('posted', response.data)
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+            this.saveMessage(payload);
+            this.sendToBot(payload);
           }
+
         }
     }
 </script>

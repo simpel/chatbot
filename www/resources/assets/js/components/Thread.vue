@@ -18,11 +18,24 @@
           -->
           <div class="card-content">
             <div class="content">
-              {{ message.body }}
-              <small>{{ message.created_at }}</small>
-              <a class="delete is-small" @click="removeMessage(message)"></a>
+              <div class="columns">
+                <div class="column">
+                  <p>{{ message.sender }}: {{ message.msg }}</p>
+                  <small>{{ message.created_at }}</small>
+                </div>
+                <div class="column is-1">
+                  <a class="delete is-small" @click="removeMessage(message)"></a>
+                </div>
+              </div>
             </div>
           </div>
+
+
+            <footer class="card-footer" v-for="reply in message.quickreplies">
+              <a class="card-footer-item" @click="quickReply(message, reply)">{{ reply }}</a>
+            </footer>
+
+
         </div>
       </div>
     </div>
@@ -30,7 +43,10 @@
 </template>
 
 <script>
+    import wit from './../mixins/wit.js';
+
     export default {
+        mixins: [wit],
         data() {
           return {
             messages: ''
@@ -39,7 +55,7 @@
         created() {
           const self = this;
 
-          axios.get('/api/anvandare/1/meddelande')
+          axios.get('/api/meddelande')
             .then(function (response) {
               self.messages = response.data;
             })
@@ -55,7 +71,31 @@
         },
         methods: {
           removeMessage: function(message) {
-            console.log(message.id)
+
+            const self = this;
+            const m = message;
+            axios.post('/api/meddelande/'+message.id, {
+              message: message,
+              _method: 'delete'
+            })
+            .then(function (response) {
+              self.messages.splice(self.messages.indexOf(m), 1);
+              
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          },
+          quickReply: function(message, reply) {
+              message.quickreplies = null;
+
+              var payload = {
+                msg: reply,
+                type: 'msg',
+                sender: 'user'
+              };
+
+              this.saveMessage(payload);
           }
         }
     }

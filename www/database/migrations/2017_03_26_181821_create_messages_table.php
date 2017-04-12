@@ -13,11 +13,13 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
+Schema::dropIfExists('messages');
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('body'); // the message
+            $table->text('msg'); // the body of the message
+            $table->string('sender'); // user or bot
+            $table->string('type'); // msg, action, etc
             $table->string('user_id'); //user associated with the message
-            $table->string('type'); // user or bot
             $table->timestamps();
         });
     }

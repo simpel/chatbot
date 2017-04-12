@@ -26,6 +26,7 @@ Route::post('/anvandare/{user}/avsluta', 'UserController@destroy'); //update use
 Route::get('/loggain', 'SessionController@create'); //login the user
 Route::get('/loggaut', 'SessionController@destroy'); //logout the user
 
-Route::get('/api/anvandare/{user}/meddelande', 'MessageController@index');
-Route::post('/api/meddelande/{message}/tabort', 'MessageController@destroy'); //show message history
-Route::post('/api/anvandare/{user}/meddelande', 'MessageController@store'); //post new message
+Route::get('/api/meddelande', 'MessageController@index');
+Route::post('/api/meddelande', 'MessageController@store');
+Route::post('/api/bot/', 'WitController@store'); //post new message
+Route::delete('/api/meddelande/{message}', 'MessageController@destroy'); //show message history
