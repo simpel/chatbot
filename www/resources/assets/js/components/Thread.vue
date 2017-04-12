@@ -1,7 +1,7 @@
 <template>
   
-    <div class="columns is-mobile">
-      <div class="column is-6 is-offset-6">
+    <div class="columns is-mobile" >
+      <div class="column is-6 is-offset-6" id="thread">
         
         <div class="card" :class="message.type"  v-for="message in messages">
           <!-- 
@@ -52,6 +52,14 @@
             messages: ''
           }
         },
+        watch: {
+            // whenever question changes, this function will run
+            messages: function (e) {
+              var threadDiv = document.getElementById('thread');
+              threadDiv.scrollTop = threadDiv.scrollHeight;
+              console.log(threadDiv.scrollY, threadDiv.scrollHeight, threadDiv.clientHeight)
+            }
+          },
         created() {
           const self = this;
 
