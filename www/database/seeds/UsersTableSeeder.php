@@ -17,5 +17,12 @@ class UsersTableSeeder extends Seeder
             'email' => str_random(10).'@gmail.com',
             'password' => bcrypt('secret'),
         ]);
+
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Värderingskompassen',
+            'email' => str_random(10).'@gmail.com',
+            'password' => bcrypt('secret'),
+        ]);
     }
 }

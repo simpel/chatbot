@@ -13,6 +13,10 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
+    'loggly' => array(
+        'key'   => '4e059738-49c0-4188-b7b2-35d6dbbcb4e9',
+        'tag'   => 'ProjectName_' .strtolower(env('APP_ENV')),
+    ),
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),

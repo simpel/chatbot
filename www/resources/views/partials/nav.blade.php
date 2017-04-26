@@ -1,10 +1,9 @@
-<nav class="navbar navbar-toggleable-sm navbar-light sticky-top bg-faded">
+<nav class="navbar navbar-toggleable-sm navbar-light fixed-top">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Visa/dölj menyn">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="#">
-    <img src="https://unsplash.it/30/30" width="30" height="30" class="d-inline-block align-top" alt="">
-    Värderings<strong>kompassen</strong>
+        Värderings<strong>kompassen</strong>
   </a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">

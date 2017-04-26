@@ -8,6 +8,9 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
+window.moment = require('moment');
+moment().format();
+window.moment.locale('sv');
 
 
 global.Tether = require('tether');

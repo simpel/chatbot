@@ -1,109 +1,100 @@
 <template>
-  
-    <div class="columns is-mobile" >
-      <div class="column is-6 is-offset-6" id="thread">
-        
-        <div class="card" :class="message.type"  v-for="message in messages">
-          <!-- 
-          <header class="card-header">
-            <p class="card-header-title">
-              Component
-            </p>
-            <a class="card-header-icon">
-              <span class="icon">
-                <i class="fa fa-angle-down"></i>
-              </span>
-            </a>
-          </header>
-          -->
-          <div class="card-content">
-            <div class="content">
-              <div class="columns">
-                <div class="column">
-                  <p>{{ message.sender }}: {{ message.msg }}</p>
-                  <small>{{ message.created_at }}</small>
-                </div>
-                <div class="column is-1">
-                  <a class="delete is-small" @click="removeMessage(message)"></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-            <footer class="card-footer" v-for="reply in message.quickreplies">
-              <a class="card-footer-item" @click="quickReply(message, reply)">{{ reply }}</a>
-            </footer>
-
-
-        </div>
+  <div>
+  <div 
+    v-bind:class="(message.user_id != 1) ? 'justify-content-md-right' : 'justify-content-md-left'" 
+    class="row mb-1"
+    v-for="message in messages">
+  <div class="col" v-if="(message.user_id != 1)"></div>
+  <div class="col-10 col-md-auto">
+    <small class="text-muted">{{ message.created_at | moment  }} (<a href="#" @click="removeMessage(message)">Ta bort</a>)</small>
+    <div 
+      class="card"
+      v-bind:class="(message.user_id != 1) ? 'card-primary card-inverse' : ''"
+      >
+      <div class="card-block">
+        <blockquote class="card-blockquote">
+        <p class="mb-0">{{ message.msg }}</p>
+        </blockquote>
       </div>
+
+      <ul class="list-group list-group-flush" v-for="reply in message.quickreplies">
+        <li class="list-group-item">
+          <a class="card-link" href="javascript:void(0);" @click="quickReply(message, reply)">{{ reply }}</a>
+        </li>    
+      </ul>
+       
+          
+
+   
+    
     </div>
+  </div>
+  <div class="col" v-if="(message.user_id == 1)"></div>
+  </div>
+</div>
+          
 
 </template>
 
 <script>
-    import wit from './../mixins/wit.js';
+    import bot from './../mixins/bot.js';
 
     export default {
-        mixins: [wit],
+        mixins: [bot],
         data() {
           return {
             messages: ''
           }
-        },
+        }, 
         watch: {
             // whenever question changes, this function will run
             messages: function (e) {
-              var threadDiv = document.getElementById('thread');
-              threadDiv.scrollTop = threadDiv.scrollHeight;
-              console.log(threadDiv.scrollY, threadDiv.scrollHeight, threadDiv.clientHeight)
+              $("html, body").animate({ scrollTop: $(document).height() }, "fast");
             }
           },
         created() {
-          const self = this;
-
+          var self = this;
+          window.Event.$on('newMessagePosted', function(e) {
+            self.messages.push(e);
+          })
+          
+        },
+        mounted() {
+          var self = this;
           axios.get('/api/meddelande')
             .then(function (response) {
               self.messages = response.data;
+              self.saveUserMessage('hej');
             })
             .catch(function (error) {
               console.log(error);
             });
         },
-        mounted() {
-          const self = this;
-          window.Event.$on('posted', function(e) {
-            self.messages.push(e);
-          })
+        filters: {
+          moment: function (date) {
+            return moment(date).fromNow();
+          }
         },
         methods: {
+          moment: function () {
+            return moment();
+          },
           removeMessage: function(message) {
 
-            const self = this;
-            const m = message;
-            axios.post('/api/meddelande/'+message.id, {
+            var self = this;
+            m = message;
+            axios.post('/api/meddelande/tabort/'+message.id, {
               message: message,
               _method: 'delete'
             })
             .then(function (response) {
               self.messages.splice(self.messages.indexOf(m), 1);
               
-            })
-            .catch(function (error) {
-              console.log(error);
             });
           },
           quickReply: function(message, reply) {
               message.quickreplies = null;
-
-              var payload = {
-                msg: reply,
-                type: 'msg',
-                sender: 'user'
-              };
-
-              this.saveMessage(payload);
+              this.saveUserMessage(reply);
           }
         }
     }

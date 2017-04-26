@@ -11,9 +11,18 @@
 |
 */
 
+
+
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
+
+/*
+|--------------------------------------------------------------------------
+| Setup Loggly Handler
+|--------------------------------------------------------------------------
+*/
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +49,11 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+
+$app->configureMonologUsing(function($monolog) {
+    $handler = new \Monolog\Handler\BrowserConsoleHandler(\Monolog\Logger::INFO);
+    $monolog->pushHandler($handler);
+});
 
 /*
 |--------------------------------------------------------------------------

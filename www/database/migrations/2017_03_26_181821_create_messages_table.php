@@ -17,9 +17,11 @@ Schema::dropIfExists('messages');
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->text('msg'); // the body of the message
-            $table->string('sender'); // user or bot
+            
             $table->string('type'); // msg, action, etc
-            $table->string('user_id'); //user associated with the message
+            $table->text('quickreplies')->nullable(); // the body of the message
+            $table->integer('user_id'); //user associated with the message
+            $table->integer('thread_id'); //what thread the message is part of
             $table->timestamps();
         });
     }

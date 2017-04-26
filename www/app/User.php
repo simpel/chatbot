@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Thread;
+use App\Message;
 
 class User extends Authenticatable
 {
@@ -27,15 +29,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function thread() {
+        return $this->hasOne('App\Thread');
+    }
+
     public function messages() {
         return $this->hasMany(Message::class);
     }
 
-    public function addMessage($body, $type) {
-        return $this->messages()->create([
-            'body' => $body, 
-            'type' => $type,
-            'user_id' => 1
-        ]);
-    }
 }
